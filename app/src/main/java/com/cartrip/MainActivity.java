@@ -1,27 +1,49 @@
 package com.cartrip;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.cartrip.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import com.cartrip.mail.GmailSender;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    class SendEmailTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i("Email sending", "sending start");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                GmailSender gmailSender = new GmailSender("gionata.boccalini@gmail.com", ""); // FIXME password!!
+                gmailSender.sendMail("KM", "KM body", "gionata.boccalini@gmail.com", "gionata.boccalini@marchesini.com");
+
+                Log.i("Email sending", "send");
+            } catch (Exception e) {
+                Log.i("Email sending", "cannot send");
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                final SendEmailTask sendEmailTask = new SendEmailTask();
+                sendEmailTask.execute();
+
+                Snackbar.make(view, "Mail sent!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
