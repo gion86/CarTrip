@@ -29,7 +29,7 @@ jobs:
         with:
           arguments: build -x test
 
-      - name: Build app
+      - name: Test app
         uses: gradle/gradle-build-action@v2
         with:
           arguments: test

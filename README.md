@@ -1,3 +1,4 @@
+[![Build and test with gradle](https://github.com/gion86/CarTrip/actions/workflows/grade.yml/badge.svg?branch=develop)](https://github.com/gion86/CarTrip/actions/workflows/grade.yml)
 # CARTRIP APP
 
 Simple Android app to count km travelled in a car trip.
