@@ -17,32 +17,17 @@ import com.cartrip.databinding.ActivityMainBinding;
 import com.cartrip.mail.GmailSender;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
-    class SendEmailTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.i("Email sending", "sending start");
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                GmailSender gmailSender = new GmailSender("gionata.boccalini@gmail.com", ""); // FIXME password!!
-                gmailSender.sendMail("KM", "KM body", "gionata.boccalini@gmail.com", "gionata.boccalini@marchesini.com");
-
-                Log.i("Email sending", "send");
-            } catch (Exception e) {
-                Log.i("Email sending", "cannot send");
-                e.printStackTrace();
-            }
-            return null;
-        }
+    private boolean sendMail() {
+        GmailSender gmailSender = new GmailSender("gionata.boccalini@gmail.com", ""); // FIXME password!!
+        return gmailSender.sendMail("KM", "KM body", "gionata.boccalini@gmail.com", "gionata.boccalini@marchesini.com");
     }
 
     @Override
@@ -61,11 +46,22 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final SendEmailTask sendEmailTask = new SendEmailTask();
-                sendEmailTask.execute();
+                // Create an executor that executes tasks in a background thread.
+                ScheduledExecutorService backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
 
-                Snackbar.make(view, "Mail sent!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // Execute a task in the background thread.
+                backgroundExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (sendMail()) {
+                            Snackbar.make(view, "Mail sent!", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            Log.i("Email sending", "sent");
+                        } else {
+                            Log.i("Email sending", "cannot send mail");
+                        }
+                    }
+                });
             }
         });
     }
