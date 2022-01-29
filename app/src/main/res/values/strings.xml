@@ -2,11 +2,19 @@
     <string name="app_name">CarTrip</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
+    <string name="first_fragment_label">Trip KM Counters</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="mail_subject_km">Trip KM counters</string>
+    <string name="mail_body_km_start">Start KM counter: %1$d</string>
+    <string name="mail_body_km_end">End KM counter: %1$d</string>
+    <string name="mail_body_km_diff">KM counter diff: %1$d</string>
+
+    <string name="text_view_km_start">Start KM counter</string>
+    <string name="text_view_km_end">End KM counter</string>
 </resources>

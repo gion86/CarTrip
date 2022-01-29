@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
+    <TextView
+        android:id="@+id/startKMText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:text="@string/text_view_km_end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/endKMCount"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <EditText
         android:id="@+id/startKMCount"
         android:layout_width="wrap_content"
@@ -13,9 +25,24 @@
         android:layout_marginBottom="432dp"
         android:ems="10"
         android:inputType="number"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/endKMText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:text="@string/text_view_km_start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/startKMCount"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -24,19 +51,25 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/startKMCount" />
+        app:layout_constraintTop_toBottomOf="@id/startKMCount"
+        app:layout_constraintVertical_bias="0.299"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:autofillHints="" />
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/endKMCount" />
+
+    <!-- <Button
+         android:id="@+id/button_first"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/next"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/endKMCount" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
