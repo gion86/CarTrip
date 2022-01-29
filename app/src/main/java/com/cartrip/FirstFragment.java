@@ -3,34 +3,22 @@ package com.cartrip;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.cartrip.databinding.FragmentFirstBinding;
+import com.cartrip.model.KMViewModel;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-
-    private int startKMCount;
-    private int endKMCount;
-
-    public FirstFragment() {
-    }
-
-    public FirstFragment(int startKM, int endKM) {
-        this.startKMCount = startKM;
-        this.endKMCount = endKM;
-    }
-
-    int getKMCount() {
-        return endKMCount - startKMCount;
-    }
 
     @Override
     public View onCreateView(
@@ -44,13 +32,15 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });
+        final KMViewModel viewModel = new ViewModelProvider(requireActivity()).get(KMViewModel.class);
+
+//        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NavHostFragment.findNavController(FirstFragment.this)
+//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+//            }
+//        });
 
         binding.startKMCount.addTextChangedListener(new TextWatcher() {
 
@@ -60,7 +50,8 @@ public class FirstFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                startKMCount = Integer.parseInt(charSequence.toString());
+                int startKMCount = Integer.parseInt(charSequence.toString());
+                viewModel.updateStartKMCount(startKMCount);
             }
 
             @Override
@@ -76,7 +67,8 @@ public class FirstFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                endKMCount = Integer.parseInt(charSequence.toString());
+                int endKMCount = Integer.parseInt(charSequence.toString());
+                viewModel.updateEndKMCount(endKMCount);
             }
 
             @Override

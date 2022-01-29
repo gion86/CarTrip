@@ -14,8 +14,7 @@ import androidx.fragment.app.Fragment;
 public class ExampleUnitTest {
 
     @Test
-    public void kmCountIsPositive() {
-        FirstFragment f1 = new FirstFragment(22, 30);
-        assertTrue(f1.getKMCount() > 0);
+    public void test() {
+       // TODO
     }
 }
