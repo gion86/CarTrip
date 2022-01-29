@@ -32,11 +32,36 @@ import javax.crypto.KeyGenerator;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String AndroidKeyStore = "AndroidKeyStore";
+    private static final String KEY_ALIAS = "CAR_TRIP_KEY_ALIAS";
+
+    private KeyStore keyStore;
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
     private int startKMCount;
     private int endKMCount;
+
+    private void generateKey() throws GeneralSecurityException, IOException {
+        keyStore = KeyStore.getInstance(AndroidKeyStore);
+        keyStore.load(null);
+
+        if (!keyStore.containsAlias(KEY_ALIAS)) {
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore);
+            keyGenerator.init(
+                    new KeyGenParameterSpec.Builder(KEY_ALIAS,
+                            KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                            .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                            .setRandomizedEncryptionRequired(false)
+                            .build());
+            keyGenerator.generateKey();
+        }
+    }
+
+    private java.security.Key getSecretKey(Context context) throws GeneralSecurityException {
+        return keyStore.getKey(KEY_ALIAS, null);
+    }
 
     private String getMailBody() {
         final String NL = System.lineSeparator();
@@ -58,6 +83,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            generateKey();
+        } catch (GeneralSecurityException | IOException e) {
+            Log.e("MainActivity", "Exception in key generation", e);
+        }
+
+        try {
+            CipherWrapper cipherWrapper = new CipherWrapper();
+            Key key = getSecretKey(getApplicationContext());
+            Log.d("MainActivity KEY: ", key.toString());
+
+            byte[] encData = cipherWrapper.encryptData(key, "test");
+
+            Log.i("MainActivity data enc: ", new String(encData));
+            Log.i("MainActivity data plain: ", cipherWrapper.decryptData(key, encData));
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

@@ -12,6 +12,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * Mail sender class that uses GMail SMTP server as default.
+ */
 public class GmailSender extends javax.mail.Authenticator {
 
     private String user;
