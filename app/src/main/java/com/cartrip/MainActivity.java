@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String AndroidKeyStore = "AndroidKeyStore";
     private static final String KEY_ALIAS = "CAR_TRIP_KEY_ALIAS";
 
+    private static final String PREF_KEY_SENDER_MAIL = "pref_sender_mail";
+    private static final String PREF_KEY_SENDER_PWD = "pref_sender_password";
+    private static final String PREF_KEY_RECIPIENT_MAIL = "pref_recipient_mail";
+
+    private String senderMail;
+    private String senderPassword;
+    private String recipientMail;
+
     private KeyStore keyStore;
 
     private AppBarConfiguration appBarConfiguration;
@@ -67,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
     private String getMailBody() {
         final String NL = System.lineSeparator();
 
-        String startKMText = getString(R.string.mail_body_km_start, this.startKMCount);
-        String endKMText = getString(R.string.mail_body_km_end, this.endKMCount);
-        String diffKMText = getString(R.string.mail_body_km_diff, this.endKMCount - this.startKMCount);
+        String startKMText = getString(R.string.mail_body_km_start, startKMCount);
+        String endKMText = getString(R.string.mail_body_km_end, endKMCount);
+        String diffKMText = getString(R.string.mail_body_km_diff, endKMCount - startKMCount);
 
         return startKMText + NL + endKMText + NL + diffKMText;
     }
@@ -114,19 +122,17 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         final KMViewModel viewModel = new ViewModelProvider(this).get(KMViewModel.class);
-        viewModel.getStartKMCount().observe(this, startKMCount -> {
-            this.startKMCount = startKMCount;
-            Log.i("startKMCount", String.valueOf(startKMCount));
+        viewModel.getStartKMCount().observe(this, startKM -> {
+            startKMCount = startKM;
+            binding.fab.setEnabled(isSendButtonEnabled());
         });
-        viewModel.getEndKMCount().observe(this, endKMCount -> {
-            this.endKMCount = endKMCount;
-            Log.i("endKMCount", String.valueOf(endKMCount));
+
+        viewModel.getEndKMCount().observe(this, endKM -> {
+            endKMCount = endKM;
+            binding.fab.setEnabled(isSendButtonEnabled());
         });
 
         binding.fab.setOnClickListener(view -> {
-            EncryptedPreferenceDataStore prefs = EncryptedPreferenceDataStore.getInstance(getApplicationContext());
-            Log.i("enc_prefer",  prefs.getString("pref_sender_password", ""));
-
             // Create an executor that executes tasks in a background thread.
             ScheduledExecutorService backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
 
@@ -141,6 +147,40 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
+
+        EncryptedPreferenceDataStore prefs = EncryptedPreferenceDataStore.getInstance(getApplicationContext());
+        senderMail = prefs.getString(PREF_KEY_SENDER_MAIL, "");
+        senderPassword = prefs.getString(PREF_KEY_SENDER_PWD, "");
+        recipientMail = prefs.getString(PREF_KEY_RECIPIENT_MAIL, "");
+
+        prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
+                    switch (key) {
+                        case PREF_KEY_SENDER_MAIL:
+                            senderMail = prefs.getString(PREF_KEY_SENDER_MAIL, "");
+                            break;
+                        case PREF_KEY_SENDER_PWD:
+                            senderPassword = prefs.getString(PREF_KEY_SENDER_PWD, "");
+                            Log.i("enc_prefer_list", senderPassword);
+                            break;
+                        case PREF_KEY_RECIPIENT_MAIL:
+                            recipientMail = prefs.getString(PREF_KEY_RECIPIENT_MAIL, "");
+                            break;
+                    }
+                    binding.fab.setEnabled(isSendButtonEnabled());
+                }
+        );
+    }
+
+    private boolean isKmCountOK() {
+        return startKMCount > 0 && endKMCount > 0 && (endKMCount - startKMCount) > 0;
+    }
+
+    private boolean isMailSettingOK() {
+        return !senderMail.isEmpty() && !senderPassword.isEmpty() && !recipientMail.isEmpty();
+    }
+
+    private boolean isSendButtonEnabled() {
+        return isKmCountOK() && isMailSettingOK();
     }
 
     @Override

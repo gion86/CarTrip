@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CarTrip</string>
     <string name="action_settings">Settings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Trip KM Counters</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -17,13 +18,13 @@
 
     <string name="text_view_km_start">Start KM counter</string>
     <string name="text_view_km_end">End KM counter</string>
-    <string name="dialog_title_edittext_password">dialog title</string>
+    <string name="dialog_title_edittext_password">Insert sender account password</string>
     <string name="title_edittext_password">Sender password</string>
     <string name="pref_cat_sender_title">Sender settings</string>
-    <string name="dialog_title_edittext_sender_mail" />
+    <string name="dialog_title_edittext_sender_mail" >Insert sender account mail address</string>
     <string name="title_edittext_sender_mail">Sender mail</string>
     <string name="pref_cat_recipient_title">Recipient settings</string>
-    <string name="dialog_title_edittext_recipient_mail" />
+    <string name="dialog_title_edittext_recipient_mail" >Insert recipient mail address</string>
     <string name="title_edittext_recipient_mail">Recipient mail</string>
 
 </resources>

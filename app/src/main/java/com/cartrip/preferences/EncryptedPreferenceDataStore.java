@@ -97,6 +97,14 @@ public class EncryptedPreferenceDataStore extends PreferenceDataStore {
         return mSharedPreferences.getBoolean(key, defValue);
     }
 
+    public void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
+        mSharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+    }
+
+    public void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
+        mSharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+    }
+
     public static EncryptedPreferenceDataStore getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new EncryptedPreferenceDataStore(context);
