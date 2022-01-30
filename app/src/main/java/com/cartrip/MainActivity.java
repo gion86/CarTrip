@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case PREF_KEY_SENDER_PWD:
                             senderPassword = prefs.getString(PREF_KEY_SENDER_PWD, "");
-                            Log.i("enc_prefer_list", senderPassword);
                             break;
                         case PREF_KEY_RECIPIENT_MAIL:
                             recipientMail = prefs.getString(PREF_KEY_RECIPIENT_MAIL, "");

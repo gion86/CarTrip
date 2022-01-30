@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:text="@string/text_view_km_end"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -22,7 +22,7 @@
         android:id="@+id/startKMCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="432dp"
+        android:autofillHints=""
         android:ems="10"
         android:inputType="number"
         android:minHeight="48dp"
@@ -30,15 +30,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.31"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/endKMText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:text="@string/text_view_km_start"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
