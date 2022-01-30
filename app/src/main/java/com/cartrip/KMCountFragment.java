@@ -3,7 +3,6 @@ package com.cartrip;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.cartrip.databinding.FragmentFirstBinding;
 import com.cartrip.model.KMViewModel;
 
-public class FirstFragment extends Fragment {
+public class KMCountFragment extends Fragment {
 
     private FragmentFirstBinding binding;
 

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cartrip.databinding.FragmentSecondBinding;
 
+// Not used for now.
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
@@ -43,5 +44,4 @@ public class SecondFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }
