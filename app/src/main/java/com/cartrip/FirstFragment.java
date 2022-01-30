@@ -51,10 +51,11 @@ public class FirstFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String value = charSequence.toString();
+                int startKMCount = 0;
                 if (!value.isEmpty()) {
-                    int startKMCount = Integer.parseInt(value);
-                    viewModel.updateStartKMCount(startKMCount);
+                    startKMCount = Integer.parseInt(value);
                 }
+                viewModel.updateStartKMCount(startKMCount);
             }
 
             @Override
@@ -71,10 +72,11 @@ public class FirstFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String value = charSequence.toString();
+                int endKMCount = 0;
                 if (!value.isEmpty()) {
-                    int endKMCount = Integer.parseInt(value);
-                    viewModel.updateEndKMCount(endKMCount);
+                    endKMCount = Integer.parseInt(value);
                 }
+                viewModel.updateEndKMCount(endKMCount);
             }
 
             @Override

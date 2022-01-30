@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                     Log.i("Email sending", "sent");
                 } else {
+                    Snackbar.make(view, "Cannot send mail!!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                     Log.i("Email sending", "cannot send mail");
                 }
             });
@@ -115,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
                     binding.fab.setEnabled(isSendButtonEnabled());
                 }
         );
+
+        binding.fab.setEnabled(isSendButtonEnabled());
     }
 
     private boolean isKmCountOK() {

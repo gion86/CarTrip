@@ -54,8 +54,7 @@ public class GmailSender extends javax.mail.Authenticator {
             Transport.send(mm);
             return true;
         } catch (MessagingException e) {
-            Log.d("GmailSender", "sendMail: " + e.getMessage());
-            e.printStackTrace();
+            Log.d("GmailSender", "sendMail: " , e);
         }
         return false;
     }
