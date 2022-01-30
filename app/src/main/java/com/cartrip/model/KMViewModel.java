@@ -1,18 +1,15 @@
 package com.cartrip.model;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.List;
 
 /**
  * Simple model for two km counters: start and end of trip.
  */
 public class KMViewModel extends ViewModel {
 
-    private final MutableLiveData<Integer> startKMCount = new MutableLiveData<Integer>();
-    private final MutableLiveData<Integer> endKMCount = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> startKMCount = new MutableLiveData<>();
+    private final MutableLiveData<Integer> endKMCount = new MutableLiveData<>();
 
     public MutableLiveData<Integer> getStartKMCount() {
         return startKMCount;
@@ -22,11 +19,11 @@ public class KMViewModel extends ViewModel {
         return endKMCount;
     }
 
-    public void updateStartKMCount(int startKMCount) {
-        this.startKMCount.setValue(startKMCount);
+    public void updateStartKMCount(int startKM) {
+        startKMCount.setValue(startKM);
     }
 
-    public void updateEndKMCount(int endKMCount) {
-        this.endKMCount.setValue(endKMCount);
+    public void updateEndKMCount(int endKM) {
+        endKMCount.setValue(endKM);
     }
 }

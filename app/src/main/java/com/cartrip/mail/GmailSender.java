@@ -17,17 +17,17 @@ import javax.mail.internet.MimeMessage;
  */
 public class GmailSender extends javax.mail.Authenticator {
 
-    private String user;
-    private String password;
-    private Session session;
+    private final String user;
+    private final String password;
+    private final Session session;
 
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
     }
 
-    public GmailSender(String user, String password) {
-        this.user = user;
-        this.password = password;
+    public GmailSender(String username, String pwd) {
+        user = username;
+        password = pwd;
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
