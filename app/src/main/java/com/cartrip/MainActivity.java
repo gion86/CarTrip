@@ -19,6 +19,7 @@ import com.cartrip.databinding.ActivityMainBinding;
 import com.cartrip.encryption.CipherWrapper;
 import com.cartrip.mail.GmailSender;
 import com.cartrip.model.KMViewModel;
+import com.cartrip.preferences.EncryptedPreferenceDataStore;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -123,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.fab.setOnClickListener(view -> {
+            EncryptedPreferenceDataStore prefs = EncryptedPreferenceDataStore.getInstance(getApplicationContext());
+            Log.i("enc_prefer",  prefs.getString("pref_sender_password", ""));
+
             // Create an executor that executes tasks in a background thread.
             ScheduledExecutorService backgroundExecutor = Executors.newSingleThreadScheduledExecutor();
 
@@ -155,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.open_settings_fragment);
             return true;
         }
 
