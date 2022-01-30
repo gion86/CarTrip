@@ -1,9 +1,6 @@
 package com.cartrip;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,61 +13,29 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.cartrip.databinding.ActivityMainBinding;
-import com.cartrip.encryption.CipherWrapper;
 import com.cartrip.mail.GmailSender;
 import com.cartrip.model.KMViewModel;
 import com.cartrip.preferences.EncryptedPreferenceDataStore;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.Key;
-import java.security.KeyStore;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import javax.crypto.KeyGenerator;
-
 public class MainActivity extends AppCompatActivity {
-
-    private static final String AndroidKeyStore = "AndroidKeyStore";
-    private static final String KEY_ALIAS = "CAR_TRIP_KEY_ALIAS";
 
     private static final String PREF_KEY_SENDER_MAIL = "pref_sender_mail";
     private static final String PREF_KEY_SENDER_PWD = "pref_sender_password";
     private static final String PREF_KEY_RECIPIENT_MAIL = "pref_recipient_mail";
 
+    private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;
+
     private String senderMail;
     private String senderPassword;
     private String recipientMail;
 
-    private KeyStore keyStore;
-
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-
     private int startKMCount;
     private int endKMCount;
-
-    private void generateKey() throws GeneralSecurityException, IOException {
-        keyStore = KeyStore.getInstance(AndroidKeyStore);
-        keyStore.load(null);
-
-        if (!keyStore.containsAlias(KEY_ALIAS)) {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore);
-            keyGenerator.init(
-                    new KeyGenParameterSpec.Builder(KEY_ALIAS,
-                            KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                            .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                            .setRandomizedEncryptionRequired(false)
-                            .build());
-            keyGenerator.generateKey();
-        }
-    }
-
-    private java.security.Key getSecretKey(Context context) throws GeneralSecurityException {
-        return keyStore.getKey(KEY_ALIAS, null);
-    }
 
     private String getMailBody() {
         final String NL = System.lineSeparator();
@@ -85,32 +50,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean sendMail() {
         String KMText = getString(R.string.mail_subject_km);
 
-        GmailSender gmailSender = new GmailSender("gionata.boccalini@gmail.com", ""); // FIXME password!!
-        return gmailSender.sendMail(KMText, getMailBody(), "gionata.boccalini@gmail.com", "gionata.boccalini@marchesini.com");
+        GmailSender gmailSender = new GmailSender(senderMail, senderPassword);
+        return gmailSender.sendMail(KMText, getMailBody(), senderMail, recipientMail);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        try {
-            generateKey();
-        } catch (GeneralSecurityException | IOException e) {
-            Log.e("MainActivity", "Exception in key generation", e);
-        }
-
-        try {
-            CipherWrapper cipherWrapper = new CipherWrapper();
-            Key key = getSecretKey(getApplicationContext());
-            Log.d("MainActivity KEY: ", key.toString());
-
-            byte[] encData = cipherWrapper.encryptData(key, "test");
-
-            Log.i("MainActivity data enc: ", new String(encData));
-            Log.i("MainActivity data plain: ", cipherWrapper.decryptData(key, encData));
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
