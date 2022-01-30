@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/pref_cat_sender_title">
+
+        <EditTextPreference
+            android:dialogTitle="@string/dialog_title_edittext_sender_mail"
+            android:key="pref_sender_mail"
+            android:title="@string/title_edittext_sender_mail"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:dialogTitle="@string/dialog_title_edittext_password"
+            android:key="pref_sender_password"
+            android:title="@string/title_edittext_password"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_cat_recipient_title">
+
+        <EditTextPreference
+            android:dialogTitle="@string/dialog_title_edittext_recipient_mail"
+            android:key="pref_recipient_mail"
+            android:title="@string/title_edittext_recipient_mail"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
