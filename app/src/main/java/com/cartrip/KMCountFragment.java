@@ -1,5 +1,8 @@
 package com.cartrip;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,7 +20,26 @@ import com.cartrip.model.KMViewModel;
 
 public class KMCountFragment extends Fragment {
 
+    private static final String SHARED_PREF_FILE = "cartrip_sharedpref";
+    private static final String PREF_KEY_START_KM = "pref_start_km";
+    private static final String PREF_KEY_END_KM = "pref_end_km";
+
+    private SharedPreferences mPreferences;
+
+    private int startKMCount;
+    private int endKMCount;
+
     private KmCountFragmentBinding binding;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mPreferences = getContext().getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
+
+        startKMCount = mPreferences.getInt(PREF_KEY_START_KM, 0);
+        endKMCount = mPreferences.getInt(PREF_KEY_END_KM, 0);
+    }
 
     @Override
     public View onCreateView(
@@ -32,14 +55,7 @@ public class KMCountFragment extends Fragment {
 
         final KMViewModel viewModel = new ViewModelProvider(requireActivity()).get(KMViewModel.class);
 
-//        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(FirstFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
-
+        binding.startKMCount.setText(String.valueOf(startKMCount));
         binding.startKMCount.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -49,7 +65,7 @@ public class KMCountFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String value = charSequence.toString();
-                int startKMCount = 0;
+                startKMCount = 0;
                 if (!value.isEmpty()) {
                     startKMCount = Integer.parseInt(value);
                 }
@@ -61,6 +77,7 @@ public class KMCountFragment extends Fragment {
             }
         });
 
+        binding.endKMCount.setText(String.valueOf(endKMCount));
         binding.endKMCount.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -70,7 +87,7 @@ public class KMCountFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String value = charSequence.toString();
-                int endKMCount = 0;
+                endKMCount = 0;
                 if (!value.isEmpty()) {
                     endKMCount = Integer.parseInt(value);
                 }
@@ -84,6 +101,15 @@ public class KMCountFragment extends Fragment {
 
         binding.startKMCount.setSelectAllOnFocus(true);
         binding.endKMCount.setSelectAllOnFocus(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(PREF_KEY_START_KM, startKMCount);
+        preferencesEditor.putInt(PREF_KEY_END_KM, endKMCount);
+        preferencesEditor.apply();
     }
 
     @Override

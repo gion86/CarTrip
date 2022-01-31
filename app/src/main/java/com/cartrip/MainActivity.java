@@ -54,6 +54,18 @@ public class MainActivity extends AppCompatActivity {
         return gmailSender.sendMail(KMText, getMailBody(), senderMail, recipientMail);
     }
 
+    private boolean isKmCountOK() {
+        return startKMCount > 0 && endKMCount > 0 && (endKMCount - startKMCount) > 0;
+    }
+
+    private boolean isMailSettingOK() {
+        return !senderMail.isEmpty() && !senderPassword.isEmpty() && !recipientMail.isEmpty();
+    }
+
+    private boolean isSendButtonEnabled() {
+        return isKmCountOK() && isMailSettingOK();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,18 +130,6 @@ public class MainActivity extends AppCompatActivity {
         );
 
         binding.fab.setEnabled(isSendButtonEnabled());
-    }
-
-    private boolean isKmCountOK() {
-        return startKMCount > 0 && endKMCount > 0 && (endKMCount - startKMCount) > 0;
-    }
-
-    private boolean isMailSettingOK() {
-        return !senderMail.isEmpty() && !senderPassword.isEmpty() && !recipientMail.isEmpty();
-    }
-
-    private boolean isSendButtonEnabled() {
-        return isKmCountOK() && isMailSettingOK();
     }
 
     @Override
