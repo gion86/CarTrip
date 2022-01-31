@@ -11,19 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.cartrip.databinding.FragmentFirstBinding;
+import com.cartrip.databinding.KmCountFragmentBinding;
 import com.cartrip.model.KMViewModel;
 
 public class KMCountFragment extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private KmCountFragmentBinding binding;
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        binding = KmCountFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -81,6 +81,9 @@ public class KMCountFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
             }
         });
+
+        binding.startKMCount.setSelectAllOnFocus(true);
+        binding.endKMCount.setSelectAllOnFocus(true);
     }
 
     @Override
