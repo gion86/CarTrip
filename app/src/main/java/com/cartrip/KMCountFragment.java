@@ -24,7 +24,7 @@ public class KMCountFragment extends Fragment {
     private static final String PREF_KEY_START_KM = "pref_start_km";
     private static final String PREF_KEY_END_KM = "pref_end_km";
 
-    private SharedPreferences mPreferences;
+    private SharedPreferences sharedPreferences;
 
     private int startKMCount;
     private int endKMCount;
@@ -35,10 +35,10 @@ public class KMCountFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPreferences = getContext().getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
+        sharedPreferences = getContext().getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
 
-        startKMCount = mPreferences.getInt(PREF_KEY_START_KM, 0);
-        endKMCount = mPreferences.getInt(PREF_KEY_END_KM, 0);
+        startKMCount = sharedPreferences.getInt(PREF_KEY_START_KM, 0);
+        endKMCount = sharedPreferences.getInt(PREF_KEY_END_KM, 0);
     }
 
     @Override
@@ -99,6 +99,10 @@ public class KMCountFragment extends Fragment {
             }
         });
 
+        // Update model on fragment start
+        viewModel.updateStartKMCount(startKMCount);
+        viewModel.updateEndKMCount(endKMCount);
+
         binding.startKMCount.setSelectAllOnFocus(true);
         binding.endKMCount.setSelectAllOnFocus(true);
     }
@@ -106,7 +110,7 @@ public class KMCountFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
         preferencesEditor.putInt(PREF_KEY_START_KM, startKMCount);
         preferencesEditor.putInt(PREF_KEY_END_KM, endKMCount);
         preferencesEditor.apply();
