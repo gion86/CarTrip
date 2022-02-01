@@ -24,6 +24,7 @@ import com.cartrip.model.KMViewModel;
 public class KMCountFragment extends Fragment {
 
     static final String SHARED_PREF_FILE = "cartrip_sharedpref";
+    private static final int KM_DEFAULT_VALUE = 0;
 
     private SharedPreferences sharedPreferences;
 
@@ -38,8 +39,8 @@ public class KMCountFragment extends Fragment {
 
         sharedPreferences = getContext().getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
 
-        startKMCount = sharedPreferences.getInt(PREF_KEY_START_KM, 0);
-        endKMCount = sharedPreferences.getInt(PREF_KEY_END_KM, 0);
+        startKMCount = sharedPreferences.getInt(PREF_KEY_START_KM, KM_DEFAULT_VALUE);
+        endKMCount = sharedPreferences.getInt(PREF_KEY_END_KM, KM_DEFAULT_VALUE);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class KMCountFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String value = charSequence.toString();
-                startKMCount = 0;
+                startKMCount = KM_DEFAULT_VALUE;
                 if (!value.isEmpty()) {
                     startKMCount = Integer.parseInt(value);
                 }
@@ -88,7 +89,7 @@ public class KMCountFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String value = charSequence.toString();
-                endKMCount = 0;
+                endKMCount = KM_DEFAULT_VALUE;
                 if (!value.isEmpty()) {
                     endKMCount = Integer.parseInt(value);
                 }
