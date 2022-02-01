@@ -20,22 +20,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         PreferenceManager preferenceManager = getPreferenceManager();
         preferenceManager.setPreferenceDataStore(EncryptedPreferenceDataStore.getInstance(getContext()));
-
         setPreferencesFromResource(R.xml.preferences, rootKey);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        EditTextPreference passwordEdit = (EditTextPreference) getPreferenceManager().findPreference("pref_sender_password");
-
-        passwordEdit.setOnBindEditTextListener(editText -> {
-            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        });
-
-        passwordEdit.setSummaryProvider(preference -> {
-            return "";
-        });
-
+        EditTextPreference passwordEdit = getPreferenceManager().findPreference("pref_sender_password");
+        passwordEdit.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
+        passwordEdit.setSummaryProvider(preference -> "");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 }

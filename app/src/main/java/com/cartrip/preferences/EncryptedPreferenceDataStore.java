@@ -14,95 +14,93 @@ public class EncryptedPreferenceDataStore extends PreferenceDataStore {
 
     private static final String CONFIG_FILE_NAME = "cartrip_preferences";
     private static EncryptedPreferenceDataStore mInstance;
-    private SharedPreferences mSharedPreferences;
-    private Context mContext;
+    private SharedPreferences sharedPreferences;
 
     private EncryptedPreferenceDataStore(Context context) {
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
 
-            mContext = context;
-            mSharedPreferences = EncryptedSharedPreferences.create(
+            sharedPreferences = EncryptedSharedPreferences.create(
                     CONFIG_FILE_NAME,
                     masterKeyAlias,
                     context,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, //for encrypting Keys
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM ////for encrypting Values
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM //for encrypting Values
             );
         } catch (Exception e) {
             // Fallback
-            mSharedPreferences = context.getSharedPreferences(CONFIG_FILE_NAME, Context.MODE_PRIVATE);
+            sharedPreferences = context.getSharedPreferences(CONFIG_FILE_NAME, Context.MODE_PRIVATE);
         }
     }
 
     @Override
     public void putString(String key, @Nullable String value) {
-        mSharedPreferences.edit().putString(key, value).apply();
+        sharedPreferences.edit().putString(key, value).apply();
     }
 
     @Override
     public void putStringSet(String key, @Nullable Set<String> values) {
-        mSharedPreferences.edit().putStringSet(key, values).apply();
+        sharedPreferences.edit().putStringSet(key, values).apply();
     }
 
     @Override
     public void putInt(String key, int value) {
-        mSharedPreferences.edit().putInt(key, value).apply();
+        sharedPreferences.edit().putInt(key, value).apply();
     }
 
     @Override
     public void putLong(String key, long value) {
-        mSharedPreferences.edit().putLong(key, value).apply();
+        sharedPreferences.edit().putLong(key, value).apply();
     }
 
     @Override
     public void putFloat(String key, float value) {
-        mSharedPreferences.edit().putFloat(key, value).apply();
+        sharedPreferences.edit().putFloat(key, value).apply();
     }
 
     @Override
     public void putBoolean(String key, boolean value) {
-        mSharedPreferences.edit().putBoolean(key, value).apply();
+        sharedPreferences.edit().putBoolean(key, value).apply();
     }
 
     @Nullable
     @Override
     public String getString(String key, @Nullable String defValue) {
-        return mSharedPreferences.getString(key, defValue);
+        return sharedPreferences.getString(key, defValue);
     }
 
     @Nullable
     @Override
     public Set<String> getStringSet(String key, @Nullable Set<String> defValues) {
-        return mSharedPreferences.getStringSet(key, defValues);
+        return sharedPreferences.getStringSet(key, defValues);
     }
 
     @Override
     public int getInt(String key, int defValue) {
-        return mSharedPreferences.getInt(key, defValue);
+        return sharedPreferences.getInt(key, defValue);
     }
 
     @Override
     public long getLong(String key, long defValue) {
-        return mSharedPreferences.getLong(key, defValue);
+        return sharedPreferences.getLong(key, defValue);
     }
 
     @Override
     public float getFloat(String key, float defValue) {
-        return mSharedPreferences.getFloat(key, defValue);
+        return sharedPreferences.getFloat(key, defValue);
     }
 
     @Override
     public boolean getBoolean(String key, boolean defValue) {
-        return mSharedPreferences.getBoolean(key, defValue);
+        return sharedPreferences.getBoolean(key, defValue);
     }
 
     public void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        mSharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
     }
 
     public void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        mSharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
     public static EncryptedPreferenceDataStore getInstance(Context context) {

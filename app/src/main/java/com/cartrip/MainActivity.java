@@ -108,21 +108,21 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-        EncryptedPreferenceDataStore prefs = EncryptedPreferenceDataStore.getInstance(getApplicationContext());
-        senderMail = prefs.getString(PREF_KEY_SENDER_MAIL, "");
-        senderPassword = prefs.getString(PREF_KEY_SENDER_PWD, "");
-        recipientMail = prefs.getString(PREF_KEY_RECIPIENT_MAIL, "");
+        EncryptedPreferenceDataStore encryptedPrefs = EncryptedPreferenceDataStore.getInstance(getApplicationContext());
+        senderMail = encryptedPrefs.getString(PREF_KEY_SENDER_MAIL, "");
+        senderPassword = encryptedPrefs.getString(PREF_KEY_SENDER_PWD, "");
+        recipientMail = encryptedPrefs.getString(PREF_KEY_RECIPIENT_MAIL, "");
 
-        prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
+        encryptedPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
                     switch (key) {
                         case PREF_KEY_SENDER_MAIL:
-                            senderMail = prefs.getString(PREF_KEY_SENDER_MAIL, "");
+                            senderMail = encryptedPrefs.getString(PREF_KEY_SENDER_MAIL, "");
                             break;
                         case PREF_KEY_SENDER_PWD:
-                            senderPassword = prefs.getString(PREF_KEY_SENDER_PWD, "");
+                            senderPassword = encryptedPrefs.getString(PREF_KEY_SENDER_PWD, "");
                             break;
                         case PREF_KEY_RECIPIENT_MAIL:
-                            recipientMail = prefs.getString(PREF_KEY_RECIPIENT_MAIL, "");
+                            recipientMail = encryptedPrefs.getString(PREF_KEY_RECIPIENT_MAIL, "");
                             break;
                     }
                     binding.fab.setEnabled(isSendButtonEnabled());
