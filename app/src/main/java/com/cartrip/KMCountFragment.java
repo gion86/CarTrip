@@ -24,7 +24,7 @@ import com.cartrip.model.KMViewModel;
 public class KMCountFragment extends Fragment {
 
     static final String SHARED_PREF_FILE = "cartrip_sharedpref";
-    private static final int KM_DEFAULT_VALUE = 0;
+    static final int KM_DEFAULT_VALUE = 0;
 
     private SharedPreferences sharedPreferences;
 

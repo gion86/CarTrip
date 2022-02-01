@@ -5,13 +5,13 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.cartrip.KMCountFragment.KM_DEFAULT_VALUE;
 import static com.cartrip.KMCountFragment.SHARED_PREF_FILE;
 import static com.cartrip.PreferenceConstants.PREF_KEY_END_KM;
 import static com.cartrip.PreferenceConstants.PREF_KEY_START_KM;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
@@ -43,39 +43,30 @@ public class KMCountFragmentIT {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         sharedPreferences = appContext.getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
+        // Preference are always present BOTH in shared preferences.
+        startKMCount = checkPrefPresence(PREF_KEY_START_KM, START_KM_COUNT_TEST_VALUE);
+        endKMCount = checkPrefPresence(PREF_KEY_END_KM, END_KM_COUNT_TEST_VALUE);
+    }
 
-        if (sharedPreferences.contains(PREF_KEY_START_KM)) {
+    private int checkPrefPresence(String prefKey, int defaultValue) {
+        int prefValue = defaultValue;
+        if (sharedPreferences.contains(prefKey)) {
             clearPref = false;
-            startKMCount = sharedPreferences.getInt(PREF_KEY_START_KM, 0);
+            prefValue = sharedPreferences.getInt(prefKey, KM_DEFAULT_VALUE);
         } else {
             clearPref = true;
-            startKMCount = START_KM_COUNT_TEST_VALUE;
             SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
-            preferencesEditor.putInt(PREF_KEY_START_KM, startKMCount);
+            preferencesEditor.putInt(prefKey, prefValue);
             preferencesEditor.apply();
         }
 
-        if (sharedPreferences.contains(PREF_KEY_END_KM)) {
-            clearPref = false;
-            endKMCount = sharedPreferences.getInt(PREF_KEY_END_KM, 0);
-        } else {
-            clearPref = true;
-            endKMCount = END_KM_COUNT_TEST_VALUE;
-            SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
-            preferencesEditor.putInt(PREF_KEY_END_KM, endKMCount);
-            preferencesEditor.apply();
-        }
-
-        Log.d("startKMCount = ", String.valueOf(startKMCount));
-        Log.d("endKMCount = ", String.valueOf(endKMCount));
-        Log.d("clearPref = ", String.valueOf(clearPref));
+        return prefValue;
     }
 
     @After
     public void tearDown() {
         if (clearPref) {
             sharedPreferences.edit().clear().apply();
-            Log.d("clearPref = ", "CLEARED");
         }
     }
 
