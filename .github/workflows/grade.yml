@@ -12,7 +12,7 @@ on:
 
 # Where will they run
 jobs:
-  build_and_test:
+  build:
     runs-on: ubuntu-latest
     steps:
       ## Checkout our repository ###
@@ -29,6 +29,11 @@ jobs:
         with:
           arguments: build -x test
 
+  test:
+    runs-on: macos-latest
+    needs: build
+
+    steps:
       - name: Test app
         uses: gradle/gradle-build-action@v2
         with:
@@ -36,7 +41,7 @@ jobs:
 
       - name: Archive JUnit Report
         uses: actions/upload-artifact@v2
-        if: ${{ always() }}
+        if: ${{ failure() }}
         with:
           name: gradle-report-jdk-11
           path: '**/build/reports/tests/'
