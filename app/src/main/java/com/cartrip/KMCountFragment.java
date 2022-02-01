@@ -20,9 +20,9 @@ import com.cartrip.model.KMViewModel;
 
 public class KMCountFragment extends Fragment {
 
-    private static final String SHARED_PREF_FILE = "cartrip_sharedpref";
-    private static final String PREF_KEY_START_KM = "pref_start_km";
-    private static final String PREF_KEY_END_KM = "pref_end_km";
+    static final String SHARED_PREF_FILE = "cartrip_sharedpref";
+    static final String PREF_KEY_START_KM = "pref_start_km";
+    static final String PREF_KEY_END_KM = "pref_end_km";
 
     private SharedPreferences sharedPreferences;
 
