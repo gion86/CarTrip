@@ -24,20 +24,22 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build app
+      - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build -x test
+
+      - name: Execute Gradle build
+        run: ./gradlew build
 
   test:
     runs-on: macos-latest
     needs: build
 
     steps:
-      - name: Test app
+      - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          arguments: test
+
+      - name: Execute app test
+        run: ./gradlew test
 
       - name: Archive JUnit Report
         uses: actions/upload-artifact@v2
