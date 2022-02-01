@@ -2,6 +2,9 @@ package com.cartrip;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.cartrip.PreferenceConstants.PREF_KEY_END_KM;
+import static com.cartrip.PreferenceConstants.PREF_KEY_START_KM;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,8 +24,6 @@ import com.cartrip.model.KMViewModel;
 public class KMCountFragment extends Fragment {
 
     static final String SHARED_PREF_FILE = "cartrip_sharedpref";
-    static final String PREF_KEY_START_KM = "pref_start_km";
-    static final String PREF_KEY_END_KM = "pref_end_km";
 
     private SharedPreferences sharedPreferences;
 

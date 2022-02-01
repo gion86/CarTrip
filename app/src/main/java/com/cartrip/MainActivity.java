@@ -1,5 +1,9 @@
 package com.cartrip;
 
+import static com.cartrip.PreferenceConstants.PREF_KEY_RECIPIENT_MAIL;
+import static com.cartrip.PreferenceConstants.PREF_KEY_SENDER_MAIL;
+import static com.cartrip.PreferenceConstants.PREF_KEY_SENDER_PWD;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,10 +26,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String PREF_KEY_SENDER_MAIL = "pref_sender_mail";
-    private static final String PREF_KEY_SENDER_PWD = "pref_sender_password";
-    private static final String PREF_KEY_RECIPIENT_MAIL = "pref_recipient_mail";
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;

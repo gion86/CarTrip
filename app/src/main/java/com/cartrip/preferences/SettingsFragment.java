@@ -1,5 +1,7 @@
 package com.cartrip.preferences;
 
+import static com.cartrip.PreferenceConstants.PREF_KEY_SENDER_PWD;
+
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -23,9 +25,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.preferences, rootKey);
     }
 
+    @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        EditTextPreference passwordEdit = getPreferenceManager().findPreference("pref_sender_password");
+        EditTextPreference passwordEdit = getPreferenceManager().findPreference(PREF_KEY_SENDER_PWD);
         passwordEdit.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
         passwordEdit.setSummaryProvider(preference -> "");
         return super.onCreateView(inflater, container, savedInstanceState);

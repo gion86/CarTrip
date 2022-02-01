@@ -5,9 +5,9 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.cartrip.KMCountFragment.PREF_KEY_END_KM;
-import static com.cartrip.KMCountFragment.PREF_KEY_START_KM;
 import static com.cartrip.KMCountFragment.SHARED_PREF_FILE;
+import static com.cartrip.PreferenceConstants.PREF_KEY_END_KM;
+import static com.cartrip.PreferenceConstants.PREF_KEY_START_KM;
 
 import android.content.Context;
 import android.content.SharedPreferences;
