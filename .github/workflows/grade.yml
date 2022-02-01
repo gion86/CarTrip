@@ -55,7 +55,7 @@ jobs:
           api-level: 29
           target: default
           arch: x86
-          profile: Pixel 2
+          profile: Nexus 6
           script: ./gradlew connectedAndroidTest --stacktrace
 
       - name: Archive JUnit Report
