@@ -49,6 +49,13 @@ jobs:
       - name: Run unit tests
         run: ./gradlew test
 
+      - name: Archive JUnit Report
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: gradle-report-jdk-11
+          path: '**/build/reports/tests/'
+
       - name: Run instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -58,9 +65,9 @@ jobs:
           profile: Nexus 6
           script: ./gradlew connectedAndroidTest --stacktrace
 
-      - name: Archive JUnit Report
+      - name: Archive Instrumentation Report
         uses: actions/upload-artifact@v2
         if: ${{ failure() }}
         with:
           name: gradle-report-jdk-11
-          path: '**/build/reports/tests/'
+          path: '**/build/outputs/androidTest-results/'
